@@ -12,7 +12,7 @@ const AddBlog: React.SFC<IAddBlogProps> = (props) => {
 
     async function getAllTags() {
         try {
-            let res = await fetch('/api/tags');
+            let res = await fetch('/api/blogs/tags');
             let data = await res.json();
             setAllTags(data)
         } catch (e) {

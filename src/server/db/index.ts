@@ -1,8 +1,10 @@
 import * as mysql from "mysql";
-import config from "../config/MySqlConnection";
+import config from "../config";
 import Blogs from "./blogs"
 import Tags from "./tags"
 import BlogTags from './blogtags'
+import Authors from "./authors"
+import Tokens   from "./tokens"
 
 export const Connection = mysql.createConnection(config.mysql)
 
@@ -22,5 +24,7 @@ export const Query = (query: string, values?: Array<string | number>) => {
 export default {
     BlogTags,
     Blogs,
-    Tags
+    Tags,
+    Authors,
+    Tokens
 }

@@ -1,8 +1,28 @@
 import * as express from 'express';
-import db from "./db"
+import db from "../../db"
+import { RequestHandler } from 'express-serve-static-core';
 const router = express.Router();
 
-router.get('/api/blogs', async (req, res) => {
+const isAdmin: RequestHandler = (req,res,next)=>{
+    if(!req.user || req.user.role !== "admin"){
+        return res.sendStatus(401)
+    }else {
+        return next();
+    }
+}
+
+
+router.get('/tags', async (req,res)=>{
+    try{
+        res.json(await db.Tags.allTags())
+    }catch(e){
+        console.log(e)
+        res.sendStatus(500)
+    }
+})
+
+
+router.get('/', async (req, res) => {
     try {
         res.json(await db.Blogs.allBlogs())
     } catch (e) {
@@ -11,7 +31,7 @@ router.get('/api/blogs', async (req, res) => {
     }
 });
 
-router.get('/api/blogs/:id', async (req, res) => {
+router.get('/:id', async (req, res) => {
     let id: number = req.params.id
     try {
         let [data] = await db.Blogs.oneBlog(id)
@@ -22,7 +42,8 @@ router.get('/api/blogs/:id', async (req, res) => {
     }
 })
 
-router.post('/api/blogs', async (req, res) => {
+
+router.post('/', async (req, res) => {
     let { title, content,tagsArr } = req.body
     try {
         await db.Blogs.createBlog(title, content)
@@ -37,7 +58,7 @@ router.post('/api/blogs', async (req, res) => {
     }
 })
 
-router.put('/api/blogs/:id', async (req,res) =>{
+router.put('/:id', async (req,res) =>{
     let { title, content,tagsArr } = req.body;
     let blogId= req.params.id;
     try{
@@ -53,7 +74,7 @@ router.put('/api/blogs/:id', async (req,res) =>{
     }
 })
 
-router.delete('/api/blogs/:id', async (req,res)=>{
+router.delete('/:id', async (req,res)=>{
     let id = req.params.id
     try{
         await db.Blogs.deleteBlog(id)
@@ -64,19 +85,10 @@ router.delete('/api/blogs/:id', async (req,res)=>{
     }
 })
 
-router.get('/api/blogs/:id/blogtags', async (req,res)=>{
+router.get('/:id/blogtags', async (req,res)=>{
     let id=req.params.id
     try{
         res.json(await db.BlogTags.getBlogTags(id))
-    }catch(e){
-        console.log(e)
-        res.sendStatus(500)
-    }
-})
-
-router.get('/api/tags', async (req,res)=>{
-    try{
-        res.json(await db.Tags.allTags())
     }catch(e){
         console.log(e)
         res.sendStatus(500)
