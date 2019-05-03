@@ -1,11 +1,17 @@
 import * as React from "react";
 import { RouteComponentProps, Link } from "react-router-dom"
-
+import { User, json as fwt } from "../utils/api"
 const ViewBlog: React.SFC<IViewProps> = (props) => {
 
     const [blog, setBlog] = React.useState(Object);
     const [selectedTags, setSelectedTags] = React.useState([])
 
+    let AdminEditButton = <></>
+    if (!User || User.userid === null || User.role !== "admin") {
+      AdminEditButton = <></>
+    } else {
+        AdminEditButton = <Link className="btn btn-outline-primary" to={`/ViewBlog/${props.match.params.id}/Edit`}>Edit Blog</Link>
+    }
 
     React.useEffect(() => {
         getBlog()
@@ -14,7 +20,7 @@ const ViewBlog: React.SFC<IViewProps> = (props) => {
 
     async function getPrevTags() {
         try {
-            let res = await fetch(`/api/blogs/${props.match.params.id}/blogtags`)
+            let res = await fwt(`/api/blogs/${props.match.params.id}/blogtags`)
             let [data] = await res.json();
             let tagNames: Array<string> = []
             for (let i = 0; i < data.length; i++) {
@@ -28,7 +34,7 @@ const ViewBlog: React.SFC<IViewProps> = (props) => {
     }
     async function getBlog() {
         try {
-            let res = await fetch(`/api/blogs/${props.match.params.id}`)
+            let res = await fwt(`/api/blogs/${props.match.params.id}`)
             let data = await res.json()
             setBlog(data)
         } catch (e) {
@@ -56,7 +62,8 @@ const ViewBlog: React.SFC<IViewProps> = (props) => {
                         <p className="card-text">{blog.content}</p>
                         <div className="d-flex justify-content-between">
                             <Link className="btn btn-outline-primary" to='/' >Back</Link>
-                            <Link className="btn btn-outline-primary" to={`/ViewBlog/${props.match.params.id}/Edit`}>Edit Blog</Link></div>
+                            {AdminEditButton}
+                        </div>
                     </div>
                 </div>
             </div>

@@ -7,9 +7,8 @@ router.use('/',(req, res, next) => {
     passport.authenticate('bearer', (err, user, info) => {
         if (user) {
             req.user = user;
-            return next();
         }
-            res.send(401);
+        return next()
     })(req, res, next);
 });
 

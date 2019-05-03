@@ -6,8 +6,11 @@ const insertToken = async(userid:number) => Query("INSERT INTO accesstokens (use
 
 const updateToken =async(userid:number,token:string) => Query("UPDATE accesstokens SET token = ? WHERE id = ?",[token,userid])
 
+const removeToken= async(userid:number) => Query("DELETE FROM accesstokens WHERE userid = ?", [userid])
+
 export default {
     tokenByIdAndToken,
     insertToken,
-    updateToken
+    updateToken,
+    removeToken
 }

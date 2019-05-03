@@ -1,5 +1,5 @@
 import * as React from "react"
-
+import {json as fwt} from "../utils/api"
 const homeTags: React.SFC<IHomeTagsProps> = (props) => {
 
     const [selectedTags, setSelectedTags] = React.useState([])
@@ -8,7 +8,7 @@ const homeTags: React.SFC<IHomeTagsProps> = (props) => {
     },[])
     async function getPrevTags(id: number) {
         try {
-            let res = await fetch(`/api/blogs/${id}/blogtags`)
+            let res = await fwt(`/api/blogs/${id}/blogtags`)
             let [data] = await res.json();
             let tagNames: Array<string> = []
             for (let i = 0; i < data.length; i++) {

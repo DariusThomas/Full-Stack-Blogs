@@ -3,19 +3,19 @@ import db from "../../db"
 import { RequestHandler } from 'express-serve-static-core';
 const router = express.Router();
 
-const isAdmin: RequestHandler = (req,res,next)=>{
-    if(!req.user || req.user.role !== "admin"){
+const isAdmin: RequestHandler = (req, res, next) => {
+    if (!req.user || req.user.role !== "admin") {
         return res.sendStatus(401)
-    }else {
+    } else {
         return next();
     }
 }
 
 
-router.get('/tags', async (req,res)=>{
-    try{
+router.get('/tags', async (req, res) => {
+    try {
         res.json(await db.Tags.allTags())
-    }catch(e){
+    } catch (e) {
         console.log(e)
         res.sendStatus(500)
     }
@@ -44,13 +44,13 @@ router.get('/:id', async (req, res) => {
 
 
 router.post('/', async (req, res) => {
-    let { title, content,tagsArr } = req.body
+    let { title, content, tagsArr, authorid } = req.body
     try {
-        await db.Blogs.createBlog(title, content)
-        let blogId:number = (await db.Blogs.blogId())[0]["id"];
-       for(let i = 0; i<tagsArr.length;i++) {
-        db.BlogTags.createBlogTags(tagsArr[i],blogId)
-       }
+        await db.Blogs.createBlog(title, content, authorid)
+        let blogId: number = (await db.Blogs.blogId())[0]["id"];
+        for (let i = 0; i < tagsArr.length; i++) {
+            db.BlogTags.createBlogTags(tagsArr[i], blogId)
+        }
         res.sendStatus(200)
     } catch (e) {
         console.log(e)
@@ -58,38 +58,39 @@ router.post('/', async (req, res) => {
     }
 })
 
-router.put('/:id', async (req,res) =>{
-    let { title, content,tagsArr } = req.body;
-    let blogId= req.params.id;
-    try{
-       await db.Blogs.updateBlog(blogId,title,content)
-       await db.BlogTags.resetBlogTags(blogId)
-       for(let i = 0; i<tagsArr.length;i++) {
-        db.BlogTags.createBlogTags(tagsArr[i],blogId)
-     }
-      res.sendStatus(200)
-    } catch(e){
+router.put('/:id', async (req, res) => {
+    let { title, content, tagsArr } = req.body;
+    let blogId = req.params.id;
+    try {
+        await db.Blogs.updateBlog(blogId, title, content)
+        await db.BlogTags.resetBlogTags(blogId)
+        for (let i = 0; i < tagsArr.length; i++) {
+            db.BlogTags.createBlogTags(tagsArr[i], blogId)
+        }
+        res.sendStatus(200)
+    } catch (e) {
         console.log(e)
         res.sendStatus(500)
     }
 })
 
-router.delete('/:id', async (req,res)=>{
+
+router.delete('/:id', async (req, res) => {
     let id = req.params.id
-    try{
+    try {
         await db.Blogs.deleteBlog(id)
         res.sendStatus(200)
-    }catch(e){
+    } catch (e) {
         console.log(e)
         res.sendStatus(500)
     }
 })
 
-router.get('/:id/blogtags', async (req,res)=>{
-    let id=req.params.id
-    try{
+router.get('/:id/blogtags', async (req, res) => {
+    let id = req.params.id
+    try {
         res.json(await db.BlogTags.getBlogTags(id))
-    }catch(e){
+    } catch (e) {
         console.log(e)
         res.sendStatus(500)
     }

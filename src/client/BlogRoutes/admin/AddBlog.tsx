@@ -1,18 +1,27 @@
 import * as React from "react";
 import $ from "jquery"
 import { RouteComponentProps } from "react-router-dom"
+import { json as fwt, User } from "../../utils/api"
 
 
 const AddBlog: React.SFC<IAddBlogProps> = (props) => {
-    const [allTags, setAllTags] = React.useState([])
+    const [allTags, setAllTags] = React.useState([]);
+    const [loading, setLoading] = React.useState(false);
 
-    React.useEffect(() => {
-        getAllTags()
-    }, [])
+    (function () {
+        if (!User || User.userid === null || User.role !== "admin") {
+            props.history.replace("/login")
+        } else {
+            React.useEffect(() => {
+                getAllTags()
+            }, [])
+        }
+    })();
+
 
     async function getAllTags() {
         try {
-            let res = await fetch('/api/blogs/tags');
+            let res = await fwt('/api/blogs/tags');
             let data = await res.json();
             setAllTags(data)
         } catch (e) {
@@ -37,25 +46,25 @@ const AddBlog: React.SFC<IAddBlogProps> = (props) => {
     }
 
     async function handleClick() {
-        let data = {
-            title: $('#title').val(),
-            content: $('#content').val(),
-            tagsArr: tagIds
+        if (!loading) {
+            setLoading(true)
+            let data = {
+                title: $('#title').val(),
+                content: $('#content').val(),
+                tagsArr: tagIds,
+                authorid: User.userid
+            }
+            try {
+                await fwt('/api/blogs', "POST", data)
+                setLoading(false)
+                props.history.push('/')
+            } catch (e) {
+                setLoading(false)
+               throw(e)
+            }
         }
-        try {
-            await fetch('/api/blogs', {
-                method: "POST",
-                headers: {
-                    "Content-type": "application/json"
-                },
-                body: JSON.stringify(data)
-            })
-            props.history.push('/')
-        } catch (e) {
-            console.log(e)
-        }
-
     }
+
     return (
         <>
             <div className=" m-3">
@@ -74,7 +83,7 @@ const AddBlog: React.SFC<IAddBlogProps> = (props) => {
                                     <label htmlFor={`${tag.name}`} className="form-check-label" >{tag.name}</label>
                                 </div>
                             </span>
-                        ) 
+                        )
                     })}
                 </div>
                 <div className="d-flex flex-rows" >

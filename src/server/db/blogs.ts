@@ -4,7 +4,7 @@ const allBlogs = async () => Query("SELECT a.id as AuthorId, b.id as BlogId, b.t
 
 const oneBlog = async (id: number) => Query("SELECT a.id as AuthorId, b.id as BlogId, b.title, a.name as Author, b.content FROM blogs b JOIN authors a on a.id=b.authorid WHERE b.id =?", [id])
 
-const createBlog = async (title: string, content: string, authorid?: number) => Query("INSERT INTO blogs (title,content,authorid) VALUES(?,?,?)", [title, content, 1])
+const createBlog = async (title: string, content: string, authorid: number) => Query("INSERT INTO blogs (title,content,authorid) VALUES(?,?,?)", [title, content, authorid])
 
 const blogId = async () => Query('SELECT id FROM blogs ORDER BY _created DESC LIMIT 1', [])
 

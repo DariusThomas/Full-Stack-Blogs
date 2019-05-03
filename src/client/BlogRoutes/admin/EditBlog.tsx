@@ -1,6 +1,7 @@
 import * as React from "react"
 import { RouteComponentProps } from "react-router-dom"
 import $ from "jquery"
+import { User, json as fwt } from "../../utils/api"
 const EditBlog: React.SFC<IEditProps> = (props) => {
 
     const [blog, setBlog] = React.useState(Object);
@@ -8,17 +9,25 @@ const EditBlog: React.SFC<IEditProps> = (props) => {
     const [blogContent, setBlogContent] = React.useState("")
     const [allTags, setAllTags] = React.useState([])
     const [selectedTags, setSelectedTags] = React.useState([])
-    const [tagIds, setTagIds] = React.useState([])
+    const [tagIds, setTagIds] = React.useState([]);
+    const [loading, setLoading] = React.useState(false);
 
-    React.useEffect(() => {
-        getAllTags()
-        getBlog()
-        getPrevTags()
-    }, [])
+    (function () {
+        if (!User || User.userid === null || User.role !== "admin") {
+            props.history.replace("/login")
+        } else {
+            React.useEffect(() => {
+                getAllTags()
+                getBlog()
+                getPrevTags()
+            }, [])
+
+        }
+    })();
 
     async function getPrevTags() {
         try {
-            let res = await fetch(`/api/blogs/${props.match.params.id}/blogtags`)
+            let res = await fwt(`/api/blogs/${props.match.params.id}/blogtags`)
             let [data] = await res.json();
             let tagNames: Array<string> = []
             let tagIds: Array<string> = []
@@ -36,7 +45,7 @@ const EditBlog: React.SFC<IEditProps> = (props) => {
 
     async function getAllTags() {
         try {
-            let res = await fetch('/api/blogs/tags');
+            let res = await fwt('/api/blogs/tags');
             let data = await res.json();
             setAllTags(data)
         } catch (e) {
@@ -48,7 +57,7 @@ const EditBlog: React.SFC<IEditProps> = (props) => {
         let blogTitle: string = ""
         let blogContent: string = ""
         try {
-            let res = await fetch(`/api/blogs/${props.match.params.id}`)
+            let res = await fwt(`/api/blogs/${props.match.params.id}`)
             let data = await res.json()
             setBlog(data)
             setBlogTitle(data.title)
@@ -71,6 +80,7 @@ const EditBlog: React.SFC<IEditProps> = (props) => {
             setTagIds([...tagIds])
         }
     }
+
     function handleContentChange(e: any) {
         setBlogContent(e.target.value)
     }
@@ -80,38 +90,40 @@ const EditBlog: React.SFC<IEditProps> = (props) => {
     }
 
     async function handleSubmitClick() {
-        let data = {
-            title: $('#title').val(),
-            content: $('#content').val(),
-            tagsArr: tagIds
-        }
-        try {
-            await fetch(`/api/blogs/${props.match.params.id}`, {
-                method: "PUT",
-                headers: {
-                    "Content-type": "application/json"
-                },
-                body: JSON.stringify(data)
-            })
-            props.history.push('/')
-        } catch (e) {
-            console.log(e)
+        if (!loading) {
+            setLoading(true)
+            let data = {
+                title: $('#title').val(),
+                content: $('#content').val(),
+                tagsArr: tagIds
+            }
+            try {
+                await fwt(`/api/blogs/${props.match.params.id}`, "PUT", data)
+                setLoading(false)
+                props.history.push('/')
+            } catch (e) {
+                setLoading(false)
+                throw(e)
+            }
         }
     }
-function handleBackClick(){
-    props.history.push(`/ViewBlog/${props.match.params.id}`)
-}
+
+    function handleBackClick() {
+        props.history.push(`/ViewBlog/${props.match.params.id}`)
+    }
 
     async function handleDeleteClick() {
-        try {
-            await fetch(`/api/blogs/${props.match.params.id}`, {
-                method: 'DELETE'
-            })
-            props.history.push('/')
-        } catch (e) {
-            console.log(e)
+        if (!loading) {
+            setLoading(true)
+            try {
+                await fwt(`/api/blogs/${props.match.params.id}`, "DELETE")
+                setLoading(false)
+                props.history.push('/')
+            } catch (e) {
+                setLoading(false)
+                throw(e)
+            }
         }
-
     }
     return (
         <>

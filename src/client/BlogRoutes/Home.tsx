@@ -1,6 +1,7 @@
 import * as React from "react"
 import { Link } from "react-router-dom"
 import Tags from "./eachBlogsTags"
+import { json as fwt } from "../utils/api"
 const HomePage: React.SFC<IHomeProps> = () => {
     const [blogs, setBlogs] = React.useState([])
 
@@ -11,7 +12,7 @@ const HomePage: React.SFC<IHomeProps> = () => {
 
     async function getBlogs() {
         try {
-            let res = await fetch('/api/blogs')
+            let res = await fwt('/api/blogs')
             let data = await res.json()
             setBlogs(data)
         } catch (e) {
