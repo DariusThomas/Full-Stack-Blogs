@@ -70,7 +70,7 @@ const Login: React.SFC<IRegisterProps> = (props) => {
                         <input id="loginPassword" className="form-control" placeholder="Enter password" onChange={handlePassword} value={password} type="password" />
                         <input className="btn btn-primary m-1" type="submit" onClick={handleClick} />
                         <div>
-                            <Link to="/Register" >I already have an account</Link>
+                            <Link to="/Login" >I already have an account</Link>
                         </div>
                     </div>
                 </div>

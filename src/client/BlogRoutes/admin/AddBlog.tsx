@@ -10,7 +10,7 @@ const AddBlog: React.SFC<IAddBlogProps> = (props) => {
 
     (function () {
         if (!User || User.userid === null || User.role !== "admin") {
-            props.history.replace("/login")
+            props.history.replace("/")
         } else {
             React.useEffect(() => {
                 getAllTags()
