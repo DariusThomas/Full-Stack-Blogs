@@ -9,7 +9,6 @@ export let User: any = {
 
 
 export const json = async <T = any>(uri: string, method: string = "GET", body?: {}) => {
-
     let headers: any = {
         "Content-type": "application/json"
     };
@@ -25,8 +24,7 @@ export const json = async <T = any>(uri: string, method: string = "GET", body?: 
             body: JSON.stringify(body)
         });
         if (result.ok) {
-            return result
-
+            return result      
         }
         // else{
 

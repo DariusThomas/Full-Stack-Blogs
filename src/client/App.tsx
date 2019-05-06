@@ -8,6 +8,7 @@ import EditBlog from './BlogRoutes/admin/EditBlog';
 import Login from './BlogRoutes/admin/Login';
 import Register from './BlogRoutes/admin/Register';
 import AccountButton from "./BlogRoutes/accountbutton"
+import Donate from "./BlogRoutes/Donate"
 import {User} from "./utils/api"
 const App: React.SFC<IAppProps> = () => {
 
@@ -26,6 +27,7 @@ const App: React.SFC<IAppProps> = () => {
                     <Link className="btn btn-primary m-2" to="/">Home</Link>
                     <AccountButton />
                     {AdminAddButton}
+                    <Link className = "btn btn-outline-primary m-2" to ="/Donate">Donate</Link>
                 </div>
                 <Switch>
                     <Route exact path="/" component={Home} />
@@ -34,6 +36,7 @@ const App: React.SFC<IAppProps> = () => {
                     <Route exact path="/ViewBlog/:id/Edit" component={EditBlog} />
                     <Route exact path ="/Login" component ={Login} />
                     <Route exact path ="/Register" component ={Register} />
+                    <Route exact path ="/Donate" component ={Donate} />
                 </Switch>
             </Router>
         </>

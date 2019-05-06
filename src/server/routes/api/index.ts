@@ -3,6 +3,9 @@ import * as express from "express"
 import * as passport from "passport"
 const router = express.Router();
 
+
+
+
 router.use('/',(req, res, next) => {
     passport.authenticate('bearer', (err, user, info) => {
         if (user) {
@@ -11,6 +14,7 @@ router.use('/',(req, res, next) => {
         return next()
     })(req, res, next);
 });
+
 
 router.use('/blogs', BlogsRoutes)
 

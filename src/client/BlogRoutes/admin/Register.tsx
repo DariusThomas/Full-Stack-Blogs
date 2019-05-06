@@ -58,7 +58,7 @@ const Login: React.SFC<IRegisterProps> = (props) => {
     return (
         <>
             <div className="h-75 d-flex justify-content-center align-items-center">
-                <div className="h-75 w-50 d-flex justify-content-center align-items-center border border-info rounded">
+                <div className="h-75 w-50 d-flex justify-content-center align-items-center border border-info rounded shadow-lg">
                     <div>
                         <h2 className="Text-center mb-2">Register</h2>
                         {invalidRegisterDiv}
@@ -66,7 +66,7 @@ const Login: React.SFC<IRegisterProps> = (props) => {
                         <input id="loginUser" className="form-control" placeholder="Enter full Name" onChange={handleUser} value={user} type="user" />
                         <label htmlFor="loginEmail" className="form-contorl">Email</label>
                         <input id="loginEmail" className="form-control" placeholder="Enter email" onChange={handleEmail} value={email} type="email" />
-                        <label htmlFor="loginPassword">PassWord</label>
+                        <label htmlFor="loginPassword">Password</label>
                         <input id="loginPassword" className="form-control" placeholder="Enter password" onChange={handlePassword} value={password} type="password" />
                         <input className="btn btn-primary m-1" type="submit" onClick={handleClick} />
                         <div>
