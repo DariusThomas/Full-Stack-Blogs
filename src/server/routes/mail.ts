@@ -1,5 +1,5 @@
 import * as express from "express"
-import {sendEmail} from "../util/email/mailgun"
+import {sendEmail} from "../util/email/mailgun1"
 const router = express.Router();
 
 router.post('/', async (req,res,next)=>{
