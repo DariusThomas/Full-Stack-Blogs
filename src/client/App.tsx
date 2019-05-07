@@ -20,6 +20,8 @@ const App: React.SFC<IAppProps> = () => {
     } else {
         AdminAddButton = <>
         <Link className="btn btn-primary m-2 " to="/addBlog">Add Blog</Link>
+        <Link className="btn btn-primary m-2" to="/contactSubs">Email Subscribers</Link>
+
         </>
     }
 
@@ -31,7 +33,6 @@ const App: React.SFC<IAppProps> = () => {
                     <Link className="btn btn-primary m-2" to="/">Home</Link>
                     <AccountButton />
                     {AdminAddButton}
-                    <Link className="btn btn-primary m-2" to="/Contact">Contact Us</Link>
                     <Link className = "btn btn-outline-primary m-2" to ="/Donate">Donate</Link>
                 </div>
                 <Switch>
@@ -42,7 +43,7 @@ const App: React.SFC<IAppProps> = () => {
                     <Route exact path ="/Login" component ={Login} />
                     <Route exact path ="/Register" component ={Register} />
                     <Route exact path ="/Donate" component ={Donate} />
-                    <Route exact path ="/Contact" component ={email} />
+                    <Route exact path ="/contactSubs" component ={email} />
                 </Switch>
             </Router>
         </>

@@ -4,8 +4,8 @@ import { json as fwt, User} from "../../utils/api"
 import {RouteComponentProps} from "react-router-dom"
 const EmailPage: React.SFC<IEmailPageProps> = (props) => {
     (function () {
-        if (!User || User.userid === null) {
-            props.history.push("/Login")
+        if (!User || User.userid === null || User.role !== "admin") {
+            props.history.push("/")
         } 
     })();
 
