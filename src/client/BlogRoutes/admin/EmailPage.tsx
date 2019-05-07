@@ -17,11 +17,11 @@ const EmailPage: React.SFC<IEmailPageProps> = (props) => {
     const handleSubmit=async (e:React.ChangeEvent<HTMLFormElement>) =>{
         e.preventDefault();
         console.log(User)
-        // try{
-        //     await fwt('/ContactUs',"POST",{email,subject,content})
-        // }catch(e){
-        //     throw e
-        // }
+        try{
+            await fwt('/ContactUs',"POST",{email,subject,content})
+        }catch(e){
+            throw e
+        }
         setEmail("");
         setContent("");
         setSubject("")
