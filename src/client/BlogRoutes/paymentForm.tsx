@@ -18,12 +18,13 @@ const PaymentForm: React.SFC<IPaymentFormProps> = (props) => {
     }
 
     return (
-        <main className ="container">
-            <h1 className="text-center">Donations</h1>
+        <main className ="container d-flex justify-content-center align-items-center h-75">
+            
             <form 
-            className ="form-group mt-3 p-3 border border-primary rounded shadow-lg"
+            className ="form-group mt-3 w-50 p-4 border border-primary rounded shadow-lg"
             onSubmit={handleSubmit}
             >
+            <h1 className="text-center">Donations</h1>
                 <label>Name</label>
                 <input 
                 type="text"

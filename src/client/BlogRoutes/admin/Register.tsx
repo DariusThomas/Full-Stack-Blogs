@@ -58,7 +58,7 @@ const Login: React.SFC<IRegisterProps> = (props) => {
     return (
         <>
             <div className="h-75 d-flex justify-content-center align-items-center">
-                <div className="h-75 w-50 d-flex justify-content-center align-items-center border border-info rounded shadow-lg">
+                <div className="p-4 w-25 d-flex justify-content-center align-items-center border border-info rounded shadow-lg">
                     <div>
                         <h2 className="Text-center mb-2">Register</h2>
                         {invalidRegisterDiv}

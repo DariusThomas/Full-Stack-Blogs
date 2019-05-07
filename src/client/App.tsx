@@ -9,14 +9,18 @@ import Login from './BlogRoutes/admin/Login';
 import Register from './BlogRoutes/admin/Register';
 import AccountButton from "./BlogRoutes/accountbutton"
 import Donate from "./BlogRoutes/Donate"
+import email from "./BlogRoutes/admin/EmailPage"
 import {User} from "./utils/api"
+
 const App: React.SFC<IAppProps> = () => {
 
     let AdminAddButton = <></>
     if (!User || User.userid === null || User.role !== "admin") {
       AdminAddButton = <></>
     } else {
-        AdminAddButton = <Link className="btn btn-primary m-2 " to="/addBlog">Add Blog</Link>
+        AdminAddButton = <>
+        <Link className="btn btn-primary m-2 " to="/addBlog">Add Blog</Link>
+        </>
     }
 
 
@@ -27,6 +31,7 @@ const App: React.SFC<IAppProps> = () => {
                     <Link className="btn btn-primary m-2" to="/">Home</Link>
                     <AccountButton />
                     {AdminAddButton}
+                    <Link className="btn btn-primary m-2" to="/Contact">Contact Us</Link>
                     <Link className = "btn btn-outline-primary m-2" to ="/Donate">Donate</Link>
                 </div>
                 <Switch>
@@ -37,6 +42,7 @@ const App: React.SFC<IAppProps> = () => {
                     <Route exact path ="/Login" component ={Login} />
                     <Route exact path ="/Register" component ={Register} />
                     <Route exact path ="/Donate" component ={Donate} />
+                    <Route exact path ="/Contact" component ={email} />
                 </Switch>
             </Router>
         </>
