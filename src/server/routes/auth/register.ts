@@ -8,6 +8,7 @@ router.post('/', async (req, res, next) => {
     let user = req.body
     let ExistingEmail = await db.Authors.userByEmail(user.email)
     if (ExistingEmail) {
+        console.log(ExistingEmail)
         res.sendStatus(401)
     } else {
         try {
