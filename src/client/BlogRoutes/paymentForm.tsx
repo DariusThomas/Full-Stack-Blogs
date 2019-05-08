@@ -12,9 +12,10 @@ const PaymentForm: React.SFC<IPaymentFormProps> = (props) => {
         e.preventDefault();
         try{
             let { token } = await props.stripe.createToken({name})
-            await fwt("/donate","POST",{token, amount})
-            setThankYouDiv(<div className="alert alert-Success">Thank you for your donations</div>)
-
+            let  donation = await fwt("/donate","POST",{token, amount})
+            if(donation.ok) {
+                setThankYouDiv(<div className="alert alert-Success">Thank you for your donations</div>)
+            }
         }catch(e){
            setThankYouDiv(<div className="alert alert-danger">error in processing</div>)
             throw e

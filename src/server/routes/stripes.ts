@@ -4,9 +4,9 @@ const router = express.Router();
 
 
 router.post("/",  async (req,res)=>{
-    let token = req.body.token.id;
-    let amt = req.body.amount;
      try{
+        let token = req.body.token.id;
+        let amt = req.body.amount;
          let data = await charge(token,amt)
          console.log(data)
          res.send("charged")
