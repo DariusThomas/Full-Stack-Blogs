@@ -6,15 +6,21 @@ const PaymentForm: React.SFC<IPaymentFormProps> = (props) => {
 
     const [name, setName] = useState("")
     const [amount, setAmount] = useState("")
+    const [ThankYouDiv, setThankYouDiv] =useState(<></>)
 
     const handleSubmit=async (e:React.ChangeEvent<HTMLFormElement>) =>{
         e.preventDefault();
         try{
             let { token } = await props.stripe.createToken({name})
             await fwt("/donate","POST",{token, amount})
+            setThankYouDiv(<div className="alert alert-Success">Thank you for your donations</div>)
+
         }catch(e){
+           setThankYouDiv(<div className="alert alert-danger">error in processing</div>)
             throw e
         }
+        setName("");
+        setAmount("")
     }
 
     return (
@@ -25,6 +31,7 @@ const PaymentForm: React.SFC<IPaymentFormProps> = (props) => {
             onSubmit={handleSubmit}
             >
             <h1 className="text-center">Donations</h1>
+            {ThankYouDiv}
                 <label>Name</label>
                 <input 
                 type="text"
