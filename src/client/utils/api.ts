@@ -24,13 +24,12 @@ export const json = async <T = any>(uri: string, method: string = "GET", body?: 
             body: JSON.stringify(body)
         });
         if (result.ok) {
-            return result      
+            return result
         }
         // else{
 
         // console.log('here')}
     } catch (e) {
-        console.log(e)
         throw (e)
     }
 }

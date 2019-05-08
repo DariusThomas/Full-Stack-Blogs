@@ -15,12 +15,10 @@ const PaymentForm: React.SFC<IPaymentFormProps> = (props) => {
             let  donation = await fwt("/donate","POST",{token, amount})
             if(donation.ok) {
                 setThankYouDiv(<div className="alert alert-Success">Thank you for your donations</div>)
-            }else{
-                throw(e)
             }
         }catch(e){
            setThankYouDiv(<div className="alert alert-danger">error in processing</div>)
-            throw e
+            throw(e)
         }
         setName("");
         setAmount("")
