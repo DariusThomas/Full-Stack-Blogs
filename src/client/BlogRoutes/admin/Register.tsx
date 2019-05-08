@@ -31,6 +31,7 @@ const Login: React.SFC<IRegisterProps> = (props) => {
                         setloading(false)
                         props.history.push('/');
                     }
+                    location.reload()
                 } else {
                     setInvalidRegisterDiv(<div className="alert alert-danger"> An accout using that email already exists</div>)
                     setPassword("")
