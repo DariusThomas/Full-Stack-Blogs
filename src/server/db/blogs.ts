@@ -6,8 +6,6 @@ const oneBlog = async (id: number) => Query("SELECT a.id as AuthorId, b.id as Bl
 
 const createBlog = async (title: string, content: string, authorid: number) => Query("INSERT INTO blogs (title,content,authorid) VALUES(?,?,?)", [title, content, authorid])
 
-const blogId = async () => Query('SELECT id FROM blogs ORDER BY _created DESC LIMIT 1', [])
-
 const updateBlog = async (blogid: number, title: string, content: string) => Query("UPDATE blogs SET title= ?, content = ? WHERE id= ? ", [title, content, blogid])
 
 const deleteBlog = async (blogid: number) => Query('DELETE FROM blogs WHERE id =?', [blogid])
@@ -18,7 +16,6 @@ export default {
     allBlogs,
     oneBlog,
     createBlog,
-    blogId,
     updateBlog,
     deleteBlog,
 }

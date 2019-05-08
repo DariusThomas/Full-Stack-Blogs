@@ -46,8 +46,8 @@ router.get('/:id', async (req, res) => {
 router.post('/', async (req, res) => {
     let { title, content, tagsArr, authorid } = req.body
     try {
-        await db.Blogs.createBlog(title, content, authorid)
-        let blogId: number = (await db.Blogs.blogId())[0]["id"];
+        let blogID:any =await db.Blogs.createBlog(title, content, authorid)   
+        let blogId: number = blogID.insertId
         for (let i = 0; i < tagsArr.length; i++) {
             db.BlogTags.createBlogTags(tagsArr[i], blogId)
         }

@@ -8,6 +8,6 @@ import email from "./mail"
  router.use('/donate', Stripes)
  router.use('/auth',authRouter);
  router.use('/api',apiRouter)
-router.use('/ContactUs',email)
+//router.use('/ContactUs',email)
 
  export default router
