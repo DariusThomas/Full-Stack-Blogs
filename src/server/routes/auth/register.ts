@@ -8,7 +8,7 @@ router.post('/', async (req, res, next) => {
     let user = req.body
     let ExistingEmail = await db.Authors.userByEmail(user.email)
     if (ExistingEmail) {
-        res.json(ExistingEmail)
+        res.sendStatus(401)
     } else {
         try {
             user.password = HashPassword(req.body.password);
