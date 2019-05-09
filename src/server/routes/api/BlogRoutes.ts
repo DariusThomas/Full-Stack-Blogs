@@ -3,10 +3,11 @@ import db from "../../db"
 import { RequestHandler } from 'express-serve-static-core';
 const router = express.Router();
 
-const isAdmin: RequestHandler = (req, res, next) => {
+export const isAdmin: RequestHandler = (req, res, next) => {
     if (!req.user || req.user.role !== "admin") {
         return res.sendStatus(401)
     } else {
+        console.log('here')
         return next();
     }
 }
@@ -43,7 +44,7 @@ router.get('/:id', async (req, res) => {
 })
 
 
-router.post('/', async (req, res) => {
+router.post('/',isAdmin, async (req, res) => {
     let { title, content, tagsArr, authorid } = req.body
     try {
         let blogID:any =await db.Blogs.createBlog(title, content, authorid)   
@@ -58,7 +59,7 @@ router.post('/', async (req, res) => {
     }
 })
 
-router.put('/:id', async (req, res) => {
+router.put('/:id',isAdmin, async (req, res) => {
     let { title, content, tagsArr } = req.body;
     let blogId = req.params.id;
     try {
@@ -75,7 +76,7 @@ router.put('/:id', async (req, res) => {
 })
 
 
-router.delete('/:id', async (req, res) => {
+router.delete('/:id',isAdmin, async (req, res) => {
     let id = req.params.id
     try {
         await db.Blogs.deleteBlog(id)
