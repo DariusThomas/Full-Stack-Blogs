@@ -19,8 +19,8 @@ const App: React.SFC<IAppProps> = () => {
       AdminAddButton = <></>
     } else {
         AdminAddButton = <>
-        <Link className="btn btn-primary m-2 " to="/addBlog">Add Blog</Link>
-        <Link className="btn btn-primary m-2" to="/contactSubs">Email Subscribers</Link>
+        <Link className=" nav-link m-2 " to="/addBlog">Add Blog</Link>
+        <Link className="nav-link m-2" to="/contactSubs">Email Subscribers</Link>
 
         </>
     }
@@ -29,13 +29,14 @@ const App: React.SFC<IAppProps> = () => {
     return (
         <>
             <Router>
-                <div className="d-flex justify-content-end">
-                    <Link className="btn btn-primary m-2" to="/">Home</Link>
+                <div className="d-flex justify-content-end text-light bg-dark h-nav">
+                    <Link className="nav-link m-2" to="/">Home</Link>
                     <AccountButton />
                     {AdminAddButton}
-                    <Link className = "btn btn-outline-primary m-2" to ="/Donate">Donate</Link>
+                    <Link className = "nav-link m-2" to ="/Donate">Donate</Link>
                 </div>
-                <Switch>
+                <div className="pt-3">
+                <Switch>  
                     <Route exact path="/" component={Home} />
                     <Route exact path="/addBlog" component={AddBlog} />
                     <Route exact path="/ViewBlog/:id" component={ViewBlog} />
@@ -43,8 +44,9 @@ const App: React.SFC<IAppProps> = () => {
                     <Route exact path ="/Login" component ={Login} />
                     <Route exact path ="/Register" component ={Register} />
                     <Route exact path ="/Donate" component ={Donate} />
-                    <Route exact path ="/contactSubs" component ={email} />
+                    <Route exact path ="/contactSubs" component ={email} />   
                 </Switch>
+                </div>
             </Router>
         </>
     )

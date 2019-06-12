@@ -19,7 +19,6 @@ const HomePage: React.SFC<IHomeProps> = () => {
             console.log(e)
         }
     }
-
     return (
         <>
             <div className="container">

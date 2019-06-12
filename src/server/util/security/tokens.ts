@@ -22,8 +22,9 @@ export const ValidateToken = async (token:string)=>{
     }
 }
 
+
 export interface IPayload{
-    [key:string]: any;
+    [key:string] :any;
     userid: number;
     unique?:string
 }

@@ -24,9 +24,9 @@ const AccBtn: React.SFC<IAccBtnProps> = (props) => {
 
     function checkLogin() {
         if (!User.userid) {
-            setAccountButton(<Link className="btn btn-primary m-2 " to="/Login">Login</Link>)
+            setAccountButton(<Link className=" nav-link m-2 " to="/Login">Login</Link>)
         } else {
-            setAccountButton(<input type="button" value="Logout" className="btn btn-primary m-2 " onClick={handleLogout} />)
+            setAccountButton(<span id="logout-btn" className="nav-link m-2 " onClick={handleLogout} >Logout</span>)
         }
 
     }
