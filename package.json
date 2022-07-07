@@ -39,7 +39,7 @@
     "jquery": "^3.4.0",
     "jsonwebtoken": "^8.5.1",
     "mailgun-js": "^0.22.0",
-    "moment": "^2.24.0",
+    "moment": "^2.29.4",
     "mysql": "^2.17.1",
     "node-sass": "^4.11.0",
     "passport": "^0.4.0",
